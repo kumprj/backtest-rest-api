@@ -47,24 +47,31 @@ module.exports.getResults = async (event, context, callback) => {
    } catch (e) {
 	console.log(e)
    }
-   
-  /**
-  db.getById('backtest_results_stg', event.pathParameters.total_pos)
-    .then(res => {
-      callback(null,{
-        statusCode: 200,
-        body: JSON.stringify(res)
-      })
-    })
-    .catch(e => {
-      callback(null,{
-        statusCode: e.statusCode || 500,
-        body: "Could not find Todo: " + e
-      })
-    })
-    */
+
 };
 
+// Get MA results
+module.exports.getMaResults = async (event, context, callback) => {  
+
+  context.callbackWaitsForEmptyEventLoop = false;  
+  try {
+    var input = event.pathParameters.todays_date
+    var date = input.replaceAll("_", "/")
+    console.log(date)
+    const sql = "select symbol, indicator_level, avg_return, win_rate, avg_return, avg_win, avg_loss, observation_period from backtest_results_10ma where todays_date = $1 order by symbol, cast(left(observation_period, position(' ' IN observation_period)-1) as int)"
+    const result = await db.query(sql, date)
+	  .then(res => {
+		callback(null, {
+			statusCode: 200,
+			body: JSON.stringify(res)
+		})
+	  });
+    //console.log(result)
+   } catch (e) {
+	console.log(e)
+   }
+   
+};
 
 module.exports.hello = async event => {
   return {
