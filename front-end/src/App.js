@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import Table from "./table";
-const db_url = 'https://4w629k6x07.execute-api.us-east-2.amazonaws.com/dev/backtest_results_stg';
+const db_url = 'https://4w629k6x07.execute-api.us-east-2.amazonaws.com/dev/backtest_results_10ma';
 
 const getCurrentFormmatedDate = () => {
   var today = new Date();
