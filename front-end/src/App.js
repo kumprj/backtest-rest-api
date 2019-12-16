@@ -63,10 +63,14 @@ class App extends Component {
               {
                 name: "Symbol",
                 prop: "symbol"
-              },
+              },              
               {
                 name: "Indicator level",
                 prop: "indicator_level"
+              },
+              {
+                name: "Win Rate",
+                prop: "win_rate"
               },
               {
                 name: "Average return",
@@ -83,6 +87,18 @@ class App extends Component {
               {
                 name: "Observation period",
                 prop: "observation_period"
+              },
+              {
+                name: "Total Trades",
+                prop: "total_trades"
+              },
+              {
+                name: "Total Positive",
+                prop: "total_pos"
+              },
+              {
+                name: "Total Negative",
+                prop: "total_neg"
               },
 
             ]}

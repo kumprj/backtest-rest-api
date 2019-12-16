@@ -61,7 +61,7 @@ module.exports.getMaResults = async (event, context, callback) => {
     var input = event.pathParameters.todays_date
     var date = input.replaceAll("_", "/")
     console.log(date)
-    const sql = "select symbol, indicator_level, avg_return, avg_win, avg_loss, observation_period from backtest_results_10ma where todays_date = $1 order by symbol, cast(left(observation_period, position(' ' IN observation_period)-1) as int)"
+    const sql = "select symbol, indicator_level, win_rate, avg_return, avg_win, avg_loss, observation_period, total_trades, total_pos, total_neg from backtest_results_10ma where todays_date = $1 order by symbol, cast(left(observation_period, position(' ' IN observation_period)-1) as int)"
     const result = await db.query(sql, date)
 	  .then(res => {
 		callback(null, {
