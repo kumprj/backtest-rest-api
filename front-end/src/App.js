@@ -52,7 +52,7 @@ class App extends Component {
         <div>
           <form onSubmit={this.handleSubmit}>
             <label value={this.state.date} onChange={this.handleChange}>
-              Date:&nbsp&nbsp
+              Date:
             <input type="text" name="date" />
             </label>
             <input type="submit" value="Submit" />
