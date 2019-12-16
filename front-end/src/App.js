@@ -58,7 +58,7 @@ class App extends Component {
             <input type="submit" value="Submit" />
           </form>
           <Table
-            data={this.state.tableData}
+            data={this.state.tableData}            
             header={[
               {
                 name: "Symbol",
