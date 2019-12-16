@@ -61,7 +61,7 @@ class App extends Component {
             data={this.state.tableData}            
             header={[
               {
-                name: "Symbol",
+                name: "Ticker",
                 prop: "symbol"
               },              
               {
