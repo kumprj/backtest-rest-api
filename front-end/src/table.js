@@ -18,9 +18,10 @@ const row = (x, i, header) =>
   </TableRow>;
 
 export default ({ data, header }) =>
+<div style={{ overflow: 'auto', height: '150px' }}>
   <Table fixedHeader={true}>
     <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
-    <div style={{ overflow: 'auto', height: '150px' }}>
+    
       <TableRow>
         {header.map((x, i) =>
           <TableHeaderColumn key={`thc-${i}`}>
@@ -28,9 +29,10 @@ export default ({ data, header }) =>
           </TableHeaderColumn>
         )}
       </TableRow>
-      </div>
+      
     </TableHeader>
     <TableBody displayRowCheckbox={false}>
       {data.map((x, i) => row(x, i, header))}
     </TableBody>
   </Table>;
+  </div>
