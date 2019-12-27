@@ -14,4 +14,4 @@ export default ({symbolSearch, data, expandAll}) => {
       )}
     </div>
   );
-}
+};
