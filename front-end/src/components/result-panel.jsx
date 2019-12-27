@@ -32,5 +32,5 @@ export default ({data, isDefaultExpanded}) => {
         </ExpansionPanelDetails>
       </ExpansionPanel>
     </Fragment>
-  )
-}
+  );
+};
