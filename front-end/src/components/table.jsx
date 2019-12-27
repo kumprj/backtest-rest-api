@@ -1,5 +1,5 @@
 import React from 'react';
-import {API_HEADERS} from '../config';
+import {API_HEADERS} from '../api-config';
 import {Paper} from '@material-ui/core';
 import MUIDataTable from 'mui-datatables';
 

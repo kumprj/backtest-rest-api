@@ -1,4 +1,4 @@
-import {DB_URL} from '../config';
+import {DB_URL} from '../api-config';
 import {validateDate} from '../utils/utils';
 
 export async function getStocksByDate(date) {

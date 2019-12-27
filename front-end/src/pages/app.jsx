@@ -42,9 +42,8 @@ export default class App extends Component {
   }
 
   handleExpandAllToggle() {
-    this.setState({
-      expandAll: !this.state.expandAll
-    }, () => {
+    this.setState({expandAll: !this.state.expandAll}, () => {
+      // forced re-render of results list to show them all expanded
       this.setState({tableData: this.state.tableData});
     });
   }

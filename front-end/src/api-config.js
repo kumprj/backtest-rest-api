@@ -1,7 +1,7 @@
 /* API JSON Fields
 *
 * column spec according to https://github.com/gregnb/mui-datatables
-* */
+*/
 export const API_HEADERS = [
   {
     label: 'Ticker',
