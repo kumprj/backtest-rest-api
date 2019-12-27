@@ -1,4 +1,7 @@
-/* API JSON Fields */
+/* API JSON Fields
+*
+* column spec according to https://github.com/gregnb/mui-datatables
+* */
 export const API_HEADERS = [
   {
     label: 'Ticker',
@@ -26,7 +29,10 @@ export const API_HEADERS = [
   },
   {
     label: 'Observation period',
-    name: 'observation_period'
+    name: 'observation_period',
+    options: {
+      sort: false
+    }
   },
   {
     label: 'Total Trades',
