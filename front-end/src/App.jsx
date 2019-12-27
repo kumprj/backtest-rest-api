@@ -1,11 +1,13 @@
 import React, {Component} from 'react';
 import moment from 'moment'
-import DateForm from './components/date-form';
-import {getStocksByDate} from './api-service';
-import ResultsList from './components/results-list';
 import {Container} from '@material-ui/core';
-import {formatDateForUrl} from './utils';
+
+import DateForm from './components/date-form';
+import ResultsList from './components/results-list';
 import OptionsPane from "./components/options";
+
+import {getStocksByDate} from './api-service';
+import {formatDateForUrl} from './utils';
 
 
 export default class App extends Component {

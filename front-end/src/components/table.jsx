@@ -1,36 +1,25 @@
 import React from "react";
-import {
-    Table,
-    TableBody,
-    TableHeader,
-    TableHeaderColumn,
-    TableRow,
-    TableRowColumn
-} from "material-ui/Table";
 import {API_HEADERS} from "../config";
+import {Paper} from "@material-ui/core";
+import MUIDataTable from 'mui-datatables';
 
-const row = (x, i, header) =>
 
-    <TableRow key={`tr-${i}`}>
-        {header.map((y, k) =>
-            <TableRowColumn key={`trc-${k}`}>
-                {x[y.prop]}
-            </TableRowColumn>
-        )}
-    </TableRow>;
+const options = {
+    responsive: 'scrollMaxHeight',
+    fixedHeaderOptions: {xAxis: true, yAxis: true},
+    selectableRows: 'none',
+    pagination: false,
+    search: false,
+    filter: false,
+};
 
 export default ({data}) =>
-    <Table fixedHeader={true}>
-        <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
-            <TableRow>
-                {API_HEADERS.map((x, i) =>
-                    <TableHeaderColumn key={`thc-${i}`}>
-                        {x.name}
-                    </TableHeaderColumn>
-                )}
-            </TableRow>
-        </TableHeader>
-        <TableBody displayRowCheckbox={false}>
-            {data.map((x, i) => row(x, i, API_HEADERS))}
-        </TableBody>
-    </Table>;
+    <Paper className='container'>
+        <MUIDataTable
+            data={data}
+            columns={API_HEADERS}
+            options={options}
+        />
+    </Paper>
+
+

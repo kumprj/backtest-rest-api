@@ -20,3 +20,7 @@ code {
 .options-pane > * {
   margin: 0 1rem 0 1rem !important;
 }
+
+.container {
+  overflow-x: auto;
+}

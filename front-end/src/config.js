@@ -1,44 +1,44 @@
 /* API JSON Fields */
 export const API_HEADERS = [
     {
-        name: "Ticker",
-        prop: "symbol"
+        label: "Ticker",
+        name: "symbol"
     },
     {
-        name: "Indicator level",
-        prop: "indicator_level"
+        label: "Indicator level",
+        name: "indicator_level"
     },
     {
-        name: "Win Rate",
-        prop: "win_rate"
+        label: "Win Rate",
+        name: "win_rate"
     },
     {
-        name: "Average return",
-        prop: "avg_return"
+        label: "Average return",
+        name: "avg_return"
     },
     {
-        name: "Average win",
-        prop: "avg_win"
+        label: "Average win",
+        name: "avg_win"
     },
     {
-        name: "Average loss",
-        prop: "avg_loss"
+        label: "Average loss",
+        name: "avg_loss"
     },
     {
-        name: "Observation period",
-        prop: "observation_period"
+        label: "Observation period",
+        name: "observation_period"
     },
     {
-        name: "Total Trades",
-        prop: "total_trades"
+        label: "Total Trades",
+        name: "total_trades"
     },
     {
-        name: "Total Positive",
-        prop: "total_pos"
+        label: "Total Positive",
+        name: "total_pos"
     },
     {
-        name: "Total Negative",
-        prop: "total_neg"
+        label: "Total Negative",
+        name: "total_neg"
     }
 ];
 
