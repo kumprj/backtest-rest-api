@@ -14,6 +14,7 @@ export default class ResultsList extends Component {
           <ResultPanel
             key={stockData.symbol}
             data={stockData}
+            isDefaultExpanded={this.props.expandAll}
           />
         )}
       </div>
