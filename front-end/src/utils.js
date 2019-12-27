@@ -1,6 +1,6 @@
 
 // TODO: this method is horrible. Refactor eventually to use better constructs/3rd party lib
-export const groupAndFilterDataBySymbol = (data, filter) => {
+export const groupAndFilterDataBySymbol = (data, filter='') => {
   const groupedData = {};
 
   data.forEach(entry => {
@@ -42,7 +42,7 @@ export const formatDateForUrl = (date) => {
  */
 export const validateDate = (date) => {
   if (typeof date !== 'string') {
-    throw new Error('Invalid date input');
+    throw new TypeError('Invalid date input');
   }
   const dateParts = date.split('_');
 
