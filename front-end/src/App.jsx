@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import moment from 'moment'
-import {Container} from '@material-ui/core';
+import {Container, CircularProgress} from '@material-ui/core';
 
 import DateForm from './components/date-form';
 import ResultsList from './components/results-list';
@@ -19,6 +19,7 @@ export default class App extends Component {
             searchDate: null,
             expandAll: false,
             symbolSearch: '',
+            loading: true,
         };
 
         this.handleDateChanged = this.handleDateChanged.bind(this);
@@ -29,7 +30,7 @@ export default class App extends Component {
     }
 
     async handleDateChanged(date) {
-        this.setState({searchDate: date}, () => {
+        this.setState({searchDate: date, loading: true}, () => {
             this.refreshTable();
         })
     };
@@ -37,7 +38,7 @@ export default class App extends Component {
     async refreshTable() {
         const formattedDate = formatDateForUrl(this.state.searchDate);
         const jsonData = await getStocksByDate(formattedDate);
-        this.setState({tableData: jsonData})
+        this.setState({tableData: jsonData, loading: false})
     }
 
     handleExpandAllToggle() {
@@ -74,11 +75,20 @@ export default class App extends Component {
                     handleSymbolFilterTyped={this.handleSymbolTyped}
                     expandAll={this.state.expandAll}
                 />
-                <ResultsList
-                    data={this.state.tableData}
-                    symbolSearch={this.state.symbolSearch}
-                    expandAll={this.state.expandAll}
-                />
+                {this.state.loading
+                    ?
+                    <div className='absolute-center'>
+                        <CircularProgress />
+                    </div>
+                    :
+                    <ResultsList
+                        data={this.state.tableData}
+                        symbolSearch={this.state.symbolSearch}
+                        expandAll={this.state.expandAll}
+                    />
+
+                }
+
             </Container>
         )
     }
