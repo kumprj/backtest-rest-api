@@ -1,22 +1,17 @@
-import React, {Component} from 'react';
+import React from 'react';
 import ResultPanel from './result-panel';
-import {groupAndFilterDataBySymbol} from '../utils';
+import {groupAndFilterDataBySymbol} from '../utils/utils';
 
-export default class ResultsList extends Component {
-    constructor(props) {
-        super(props);
-    }
-
-    render() {
-        return (
-            <div>
-                {groupAndFilterDataBySymbol(this.props.data, this.props.symbolSearch).map(stockData =>
-                <ResultPanel
-                    key={stockData.symbol}
-                    data={stockData}
-                />
-            )}
-            </div>
-        )
-    }
-}
+export default ({symbolSearch, data, expandAll}) => {
+  return (
+    <div>
+      {groupAndFilterDataBySymbol(data, symbolSearch).map(stockData =>
+        <ResultPanel
+          key={stockData.symbol}
+          data={stockData}
+          isDefaultExpanded={expandAll}
+        />
+      )}
+    </div>
+  );
+};
