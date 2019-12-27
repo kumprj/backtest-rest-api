@@ -1,21 +1,21 @@
-import React from 'react'
+import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import {MuiPickersUtilsProvider} from '@material-ui/pickers'
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import {MuiPickersUtilsProvider} from '@material-ui/pickers';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import MomentUtils from '@date-io/moment';
 
 import * as serviceWorker from './serviceWorker';
 
 const Root = () => {
-    return (
-        <MuiThemeProvider>
-            <MuiPickersUtilsProvider utils={MomentUtils}>
-                <App/>
-            </MuiPickersUtilsProvider>
-        </MuiThemeProvider>
-    )
+	return (
+		<MuiThemeProvider>
+			<MuiPickersUtilsProvider utils={MomentUtils}>
+				<App/>
+			</MuiPickersUtilsProvider>
+		</MuiThemeProvider>
+	);
 };
 
 
