@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import ResultPanel from './result-panel';
-import {groupAndFilterDataBySymbol} from '../utils';
+import {groupAndFilterDataBySymbol} from '../utils/utils';
 
 export default class ResultsList extends Component {
   constructor(props) {

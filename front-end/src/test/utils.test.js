@@ -1,4 +1,4 @@
-import {formatDateForUrl, groupAndFilterDataBySymbol, validateDate} from '../utils';
+import {formatDateForUrl, groupAndFilterDataBySymbol, validateDate} from '../utils/utils';
 import moment from 'moment';
 
 describe('groupAndFilterDataBySymbol', () => {

@@ -1,5 +1,5 @@
-import {DB_URL} from './config';
-import {validateDate} from './utils';
+import {DB_URL} from '../config';
+import {validateDate} from '../utils/utils';
 
 export async function getStocksByDate(date) {
   validateDate(date);
