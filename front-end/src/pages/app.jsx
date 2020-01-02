@@ -1,11 +1,7 @@
 import React, {Component} from 'react';
 import moment from 'moment';
 import {Container, CircularProgress} from '@material-ui/core';
-
-import DateForm from '../components/date-form';
-import ResultsList from '../components/results-list';
-import OptionsPane from '../components/options';
-
+import {DateForm, ResultsList, OptionsPane, NoDataMessage} from '../components';
 import {getStocksByDate} from '../services/api-service';
 import {formatDateForUrl} from '../utils/utils';
 
@@ -81,13 +77,16 @@ export default class App extends Component {
           <div className='absolute-center'>
             <CircularProgress />
           </div>
-          :
-          <ResultsList
-            data={this.state.tableData}
-            symbolSearch={this.state.symbolSearch}
-            expandAll={this.state.expandAll}
-          />
-
+          : (this.state.tableData.length > 0
+            ?
+            <ResultsList
+              data={this.state.tableData}
+              symbolSearch={this.state.symbolSearch}
+              expandAll={this.state.expandAll}
+            />
+            :
+            <NoDataMessage date={this.state.searchDate}/>
+          )
         }
       </Container>
     );

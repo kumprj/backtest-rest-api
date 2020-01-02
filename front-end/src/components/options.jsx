@@ -1,6 +1,5 @@
 import React from 'react';
-import {TextField} from '@material-ui/core';
-import Button from '@material-ui/core/Button';
+import {TextField, Button} from '@material-ui/core';
 
 export default ({handleSymbolFilterTyped, handleExpandAllClicked, expandAll}) => {
   return (
@@ -10,7 +9,7 @@ export default ({handleSymbolFilterTyped, handleExpandAllClicked, expandAll}) =>
         onChange={handleSymbolFilterTyped}
       />
       <Button
-        color='secondary'
+        color={expandAll ? 'secondary' : 'primary'}
         variant='contained'
         size='large'
         onClick={handleExpandAllClicked}
