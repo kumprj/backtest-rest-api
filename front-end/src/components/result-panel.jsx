@@ -30,21 +30,12 @@ export default ({data, isDefaultExpanded}) => {
 
   let displayComponent;
 
-  if (toggleView === GRAPH) {
-    displayComponent =
-      <ResultGraph
-        data={data.rows}
-      />;
-  } else if (toggleView === TABLE) {
-    displayComponent =
-      <Table
-        data={data.rows}
-      />;
+  if (toggleView === HISTORY) {
+    displayComponent = <div>STOCK PRICE LINE CHART</div>;
+  } else if (toggleView === GRAPH) {
+    displayComponent = <ResultGraph data={data.rows}/>;
   } else {
-    displayComponent =
-      <div>
-        STOCK PRICE LINE CHART
-      </div>;
+    displayComponent = <Table data={data.rows}/>;
   }
 
 
@@ -54,9 +45,7 @@ export default ({data, isDefaultExpanded}) => {
         expanded={isDefaultExpanded || expanded}
         onChange={handleChange}
       >
-        <ExpansionPanelSummary
-          expandIcon={<ExpandMoreIcon/>}
-        >
+        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
           {data.symbol}
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
