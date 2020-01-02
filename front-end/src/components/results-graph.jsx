@@ -75,7 +75,7 @@ const cleanDataForGraph = (dataRows) => {
 };
 
 const formatTooltip = (value, name) => {
-  const formattedValue = `${value}${values[name].unit}`;
+  const formattedValue = `${value}${values[name].unit || ''}`;
 
   return [values[name].label, formattedValue];
 };

@@ -8,6 +8,7 @@ import {
   Tab,
 } from '@material-ui/core';
 import Table from './results-table';
+import PriceHistory from './price-history';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ResultGraph from './results-graph';
 
@@ -31,7 +32,7 @@ export default ({data, isDefaultExpanded}) => {
   let displayComponent;
 
   if (toggleView === HISTORY) {
-    displayComponent = <div>STOCK PRICE LINE CHART</div>;
+    displayComponent = <PriceHistory symbol={data.symbol} />;
   } else if (toggleView === GRAPH) {
     displayComponent = <ResultGraph data={data.rows}/>;
   } else {
