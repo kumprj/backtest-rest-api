@@ -38,7 +38,8 @@ const request = require('request');
 // NICK VERSION
 module.exports.getBars = async (params, callback) => {
   const apiUrl = 'https://api.tdameritrade.com/v1/marketdata/AAPL/pricehistory?apikey=IDLDIAQZL3ZV2GGZWD5TNDDTF3YPPPEE&periodType=year&period=1&frequencyType=weekly&frequency=1';
-
+  const request = require('request');
+  // const apiUrl = 'https://jsonplaceholder.typicode.com/todos/1';
   request(apiUrl, {method: 'get', json: true}, (err, res, body) => {
     if (err) {
       return console.log(err);
@@ -49,11 +50,19 @@ module.exports.getBars = async (params, callback) => {
             'Access-Control-Allow-Origin': '*'
           },
           statusCode: 200,
-          body: JSON.parse(body)
+          body: JSON.stringify(body)
         }
       );
     }
   });
+  // return {
+  //   statusCode: 200,
+  //   body: JSON.stringify({ 'message': 'hello world' }),
+  //   headers: {
+  //     'Access-Control-Allow-Origin': '*',
+  //     'Content-Type': 'application/x-www-form-urlencoded'
+  //   }
+  // };
 };
 
 String.prototype.replaceAll = function (stringToFind, stringToReplace) {
