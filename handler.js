@@ -19,15 +19,27 @@ const db = require('./db_connect');
 //           console.log(e);
 //   });
 // };
-module.exports.getBars = async (event, context, callback) => {
-  const request = require('request');
+  module.exports.getBars = async (event, context, callback) => {
+    context.callbackWaitsForEmptyEventLoop = false;
+    const request = require('request');
+    const result = request('https://api.tdameritrade.com/v1/marketdata/AAPL/pricehistory?apikey=IDLDIAQZL3ZV2GGZWD5TNDDTF3YPPPEE&periodType=year&period=1&frequencyType=weekly&frequency=1', 
+      { json: true }, (err, res, body)
+      .callback(null, {
+        statusCode: 200,
+        body: JSON.stringify(res)
+    
+      })
+    );
+    console.log(result)
+  }
+    
+    // const request = require('request');
 
-  request('https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY', { json: true }, (err, res, body) => {
-    if (err) { return console.log(err); }
-    console.log(body.url);
-    console.log(body.explanation);
-  });
-};
+    // request('https://api.tdameritrade.com/v1/marketdata/AAPL/pricehistory?apikey=IDLDIAQZL3ZV2GGZWD5TNDDTF3YPPPEE&periodType=year&period=1&frequencyType=weekly&frequency=1', { json: true }, (err, res, body) => {
+    //   if (err) { return console.log(err); }
+    //   console.log(body.url);
+    //   console.log(body.explanation);
+    // });
 
 String.prototype.replaceAll = function (stringToFind, stringToReplace) {
       if (stringToFind === stringToReplace) return this;
@@ -39,6 +51,7 @@ String.prototype.replaceAll = function (stringToFind, stringToReplace) {
       }
       return temp;
 };
+
 module.exports.getResults = async (event, context, callback) => {
 
   context.callbackWaitsForEmptyEventLoop = false;
