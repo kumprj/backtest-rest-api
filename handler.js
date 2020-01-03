@@ -1,69 +1,27 @@
 const db = require('./db_connect');
 const request = require('request');
 
-// module.exports.getBars = async (event, context, callback) => {
-//   const curl = new (require( 'curl-request' ))();
-//   const code = "Authorization: ";
-//   curl.setHeaders([code])
-//       .get('https://api.tdameritrade.com/v1/marketdata/AAPL/pricehistory?apikey=IDLDIAQZL3ZV2GGZWD5TNDDTF3YPPPEE&periodType=year&period=1&frequencyType=weekly&frequency=1')
-//       .then(({statusCode, body, headers}) => {
-//         callback(null, {
-//           headers: {
-//             "Access-Control-Allow-Origin" : "*" // Required for CORS support to work
-//           },          
-//           statusCode: 200,
-//           body: JSON.stringify(body)
-//         })
-//       })
-//       .catch((e) => {
-//           console.log(e);
-//   });
-// };
+module.exports.getBars = (event, context, callback) => {
+  const symbol = event.pathParameters.symbol;
+  const apiUrl = `https://api.tdameritrade.com/v1/marketdata/${symbol}/pricehistory?apikey=IDLDIAQZL3ZV2GGZWD5TNDDTF3YPPPEE&periodType=year&period=1&frequencyType=weekly&frequency=1`;
 
-// ROBBIE VERSION
-// module.exports.getBars = async (event, context, callback) => {
-//   context.callbackWaitsForEmptyEventLoop = false;
-//   const request = require('request');
-//   const result = request('https://api.tdameritrade.com/v1/marketdata/AAPL/pricehistory?apikey=IDLDIAQZL3ZV2GGZWD5TNDDTF3YPPPEE&periodType=year&period=1&frequencyType=weekly&frequency=1',
-//     {json: true}, (err, res, body)
-//       .callback(null, {
-//         statusCode: 200,
-//         body: JSON.stringify(res)
-//
-//       })
-//   );
-//   console.log(result);
-// };
+  context.callbackWaitsForEmptyEventLoop = false;
 
-// NICK VERSION
-module.exports.getBars = async (params, callback) => {
-  const apiUrl = 'https://api.tdameritrade.com/v1/marketdata/AAPL/pricehistory?apikey=IDLDIAQZL3ZV2GGZWD5TNDDTF3YPPPEE&periodType=year&period=1&frequencyType=weekly&frequency=1';
-  const request = require('request');
-  // const apiUrl = 'https://jsonplaceholder.typicode.com/todos/1';
-  request(apiUrl, {method: 'get', json: true}, (err, res, body) => {
-    if (err) {
-      return console.log(err);
-    } else if (res.statusCode === 200 && body) {
-      callback(null,
-        {
-          headers: {
-            'Access-Control-Allow-Origin': '*',
-            'Content-Type': 'application/x-www-form-urlencoded'
-          },
-          statusCode: 200,
-          body: JSON.stringify(body)
-        }
-      );
+  request.get(apiUrl, (error, response, body) => {
+    if (error) {
+      console.log(error);
+    } else if (response.statusCode === 200 && body) {
+      callback(null, {
+        statusCode: 200,
+        headers: {
+          'Access-Control-Allow-Origin': '*' // Required for CORS support to work
+        },
+        body
+      })
+    } else {
+      callback(`Error processing request to TD Ameritrade API, returned status code: ${response.statusCode}`)
     }
-  });
-  // return {
-  //   statusCode: 200,
-  //   body: JSON.stringify({ 'message': 'hello world' }),
-  //   headers: {
-  //     'Access-Control-Allow-Origin': '*',
-  //     'Content-Type': 'application/x-www-form-urlencoded'
-  //   }
-  // };
+  })
 };
 
 String.prototype.replaceAll = function (stringToFind, stringToReplace) {
