@@ -47,7 +47,8 @@ module.exports.getBars = async (params, callback) => {
       callback(null,
         {
           headers: {
-            'Access-Control-Allow-Origin': '*'
+            'Access-Control-Allow-Origin': '*',
+            'Content-Type': 'application/x-www-form-urlencoded'
           },
           statusCode: 200,
           body: JSON.stringify(body)
