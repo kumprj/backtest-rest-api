@@ -1,106 +1,88 @@
 import React, {Component} from 'react';
-import {getStockHistory} from '../services/mock-api-service';
-import {ResponsiveContainer, CartesianGrid, Tooltip, YAxis, Area, AreaChart, XAxis} from 'recharts';
-import moment from 'moment';
-
-const tickFormatter = (epochTime) => {
-  return moment.unix(epochTime).format('MM-DD hh:mm');
-};
-
-const formatTooltip = (value) => {
-  return ['', `${value} USD`];
-};
-
-const formatTooltipLabel = (value) => {
-  return `${moment.unix(value).format('MM-DD-YYYY hh:mm a')}`;
-};
+import {Grid, Switch, Select} from '@material-ui/core';
+import {getStockHistory} from '../services/api-service';
+import PriceHistoryGraph from './price-history-graph';
+import Typography from "@material-ui/core/Typography";
 
 export default class PriceHistory extends Component {
   constructor(props) {
     super(props);
-
+    
     this.state = {
-      graphData: [],
+      view: 'candlestick',
+      period: 'monthly',
+      graphData: []
     };
-
-    this.getStockData = this.getStockData.bind(this);
-    this.determineFill = this.determineFill.bind(this);
-    this.determineLineColor = this.determineLineColor.bind(this);
+    
+    this.handlePeriodChange = this.handlePeriodChange.bind(this);
+    this.handleViewChange = this.handleViewChange.bind(this);
+    this.refreshGraphData = this.refreshGraphData.bind(this);
   }
-
-  async getStockData() {
-    // TODO: change the import so that this is using the non-mocked getStockHistory method
-    return await getStockHistory(this.props.symbol);
+  
+  handleViewChange() {
+    this.setState({
+      view: this.state.view === 'area' ? 'candlestick' : 'area'
+    });
   }
-
-  determineFill() {
-    if (this.state.graphData.length) {
-      if (this.state.graphData[0].open < this.state.graphData[this.state.graphData.length - 1].open) {
-        // light green
-        return '#c8e6c9';
-      } else if (this.state.graphData[0].open > this.state.graphData[this.state.graphData.length - 1].open) {
-        // light red
-        return '#ffcdd2';
-      } else {
-        // light gray
-        return '#f5f5f5';
-      }
-    }
+  
+  handlePeriodChange(event) {
+    this.setState({period: event.target.value}, () => {
+      this.refreshGraphData();
+    });
   }
-
-  determineLineColor() {
-    if (this.state.graphData.length) {
-      if (this.state.graphData[0].open < this.state.graphData[this.state.graphData.length - 1].open) {
-        // dark green
-        return '#4caf50';
-      } else if (this.state.graphData[0].open > this.state.graphData[this.state.graphData.length - 1].open) {
-        // dark red
-        return '#f44336';
-      } else {
-        // dark gray
-        return '#9e9e9e';
-      }
-    }
-  }
-
-  componentDidMount() {
-    this.getStockData().then(data => {
+  
+  refreshGraphData() {
+    getStockHistory(this.props.symbol).then(data => {
       this.setState({
         graphData: data
       });
     });
   }
 
+  componentDidMount() {
+    this.refreshGraphData();
+  }
+
   render() {
     return (
-      <div style={{width: '100%', height: 350}}>
-        <ResponsiveContainer>
-          <AreaChart
-            data={this.state.graphData}
+      <Grid
+        component='div'
+        container
+      >
+        <Grid item xs={9}/>
+        <Grid item xs={2}>
+          <Typography component='div'>
+            <Grid component="label" container alignItems="center" spacing={1}>
+              <Grid item>Candle</Grid>
+              <Grid item>
+                <Switch
+                  checked={this.state.view === 'area'}
+                  onChange={this.handleViewChange}
+                />
+              </Grid>
+              <Grid item>Line</Grid>
+            </Grid>
+          </Typography>
+        </Grid>
+        <Grid item xs={1}>
+          <Select
+            native
+            onChange={this.handlePeriodChange}
+            value={this.state.period}
           >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis
-              dataKey='datetime'
-              tickFormatter={tickFormatter}
-            />
-            <YAxis
-              domain={['dataMin', 'dataMax + 10']}
-            />
-            <Tooltip
-              formatter={formatTooltip}
-              labelFormatter={formatTooltipLabel}
-              separator=''
-            />
-            <Area
-              dataKey='open'
-              type='monotone'
-              fill={this.determineFill()}
-              stroke={this.determineLineColor()}
-            />
-          </AreaChart>
-        </ResponsiveContainer>
-      </div>
+            <option value='hourly'>Hourly</option>
+            <option value='daily'>Daily</option>
+            <option value='weekly'>Weekly</option>
+            <option value='monthly'>Monthly</option>
+          </Select>
+        </Grid>
+        <Grid item xs={12}>
+          <PriceHistoryGraph
+            data={this.state.graphData}
+            view={this.state.view}
+          />
+        </Grid>
+      </Grid>
     );
   }
 }
-
