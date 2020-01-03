@@ -36,7 +36,7 @@ const request = require('request');
 // };
 
 // NICK VERSION
-module.exports.getBars = async (event, context, callback) => {
+module.exports.getBars = async (params, callback) => {
   const apiUrl = 'https://api.tdameritrade.com/v1/marketdata/AAPL/pricehistory?apikey=IDLDIAQZL3ZV2GGZWD5TNDDTF3YPPPEE&periodType=year&period=1&frequencyType=weekly&frequency=1';
 
   request(apiUrl, {method: 'get', json: true}, (err, res, body) => {
@@ -49,7 +49,7 @@ module.exports.getBars = async (event, context, callback) => {
             'Access-Control-Allow-Origin': '*'
           },
           statusCode: 200,
-          body
+          body: JSON.parse(body)
         }
       );
     }
