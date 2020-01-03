@@ -1,5 +1,6 @@
 const db = require('./db_connect');
 
+const apiUrl = 'https://api.tdameritrade.com/v1/marketdata/AAPL/pricehistory?apikey=IDLDIAQZL3ZV2GGZWD5TNDDTF3YPPPEE&periodType=month&period=1&frequencyType=daily&frequency=1';
 
 // module.exports.getBars = async (event, context, callback) => {
 //   const curl = new (require( 'curl-request' ))();
@@ -22,10 +23,20 @@ const db = require('./db_connect');
 module.exports.getBars = async (event, context, callback) => {
   const request = require('request');
 
-  request('https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY', { json: true }, (err, res, body) => {
-    if (err) { return console.log(err); }
-    console.log(body.url);
-    console.log(body.explanation);
+  request(apiUrl, {method: 'get', json: true }, (err, res, body) => {
+    if (err) {
+      return console.log(err);
+    } else if (res.statusCode === 200 && body) {
+      callback(null,
+        {
+          headers: {
+            'Access-Control-Allow-Origin' : '*'
+          },
+          statusCode: 200,
+          body
+        }
+      );
+    }
   });
 };
 
