@@ -62,13 +62,6 @@ provider:
 #    - exclude-me-dir/**
 
 functions:
-  getAllTodos:
-    handler: handler.getAllTodos
-    events:
-      - http:
-          path: backtest_results_stg
-          method: get
-          cors: false
   getResults:
     handler: handler.getResults
     events:
@@ -82,7 +75,15 @@ functions:
       - http:
           path: backtest_results_10ma/{todays_date}
           method: get
-          cors: false          
+          cors: false    
+  getBars:
+    handler: handler.getBars
+    events:
+      - http:
+          path: getBars/{symbol}
+          method: get
+          cors: false  
+          
 
 
 #    The following are a few example events you can configure
