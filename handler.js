@@ -20,6 +20,21 @@ const apiUrl = 'https://api.tdameritrade.com/v1/marketdata/AAPL/pricehistory?api
 //           console.log(e);
 //   });
 // };
+
+module.exports.getBars = async (event, context, callback) => {
+  context.callbackWaitsForEmptyEventLoop = false;
+  const request = require('request');
+  const result = request('https://api.tdameritrade.com/v1/marketdata/AAPL/pricehistory?apikey=IDLDIAQZL3ZV2GGZWD5TNDDTF3YPPPEE&periodType=year&period=1&frequencyType=weekly&frequency=1',
+    { json: true }, (err, res, body)
+      .callback(null, {
+        statusCode: 200,
+        body: JSON.stringify(res)
+
+      })
+  );
+  console.log(result)
+}
+
 module.exports.getBars = async (event, context, callback) => {
   const request = require('request');
 
@@ -50,6 +65,7 @@ String.prototype.replaceAll = function (stringToFind, stringToReplace) {
       }
       return temp;
 };
+
 module.exports.getResults = async (event, context, callback) => {
 
   context.callbackWaitsForEmptyEventLoop = false;
