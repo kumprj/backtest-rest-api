@@ -1,6 +1,5 @@
 const db = require('./db_connect');
-
-const apiUrl = 'https://api.tdameritrade.com/v1/marketdata/AAPL/pricehistory?apikey=IDLDIAQZL3ZV2GGZWD5TNDDTF3YPPPEE&periodType=month&period=1&frequencyType=daily&frequency=1';
+const request = require('request');
 
 // module.exports.getBars = async (event, context, callback) => {
 //   const curl = new (require( 'curl-request' ))();
@@ -38,7 +37,7 @@ const apiUrl = 'https://api.tdameritrade.com/v1/marketdata/AAPL/pricehistory?api
 
 // NICK VERSION
 module.exports.getBars = async (event, context, callback) => {
-  const request = require('request');
+  const apiUrl = 'https://api.tdameritrade.com/v1/marketdata/AAPL/pricehistory?apikey=IDLDIAQZL3ZV2GGZWD5TNDDTF3YPPPEE&periodType=year&period=1&frequencyType=weekly&frequency=1';
 
   request(apiUrl, {method: 'get', json: true}, (err, res, body) => {
     if (err) {
