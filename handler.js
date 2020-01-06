@@ -1,9 +1,10 @@
 const db = require('./db_connect');
 const request = require('request');
+const key = 'IDLDIAQZL3ZV2GGZWD5TNDDTF3YPPPEE';
 
 module.exports.getBars = (event, context, callback) => {
   const symbol = event.pathParameters.symbol;
-  const apiUrl = `https://api.tdameritrade.com/v1/marketdata/${symbol}/pricehistory?apikey=IDLDIAQZL3ZV2GGZWD5TNDDTF3YPPPEE&periodType=year&period=1&frequencyType=weekly&frequency=1`;
+  const apiUrl = `https://api.tdameritrade.com/v1/marketdata/${symbol}/pricehistory?apikey=${key}&periodType=year&period=1&frequencyType=weekly&frequency=1`;
 
   context.callbackWaitsForEmptyEventLoop = false;
 
