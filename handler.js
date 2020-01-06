@@ -1,13 +1,12 @@
 const db = require('./db_connect');
 const request = require('request');
-const key = 'IDLDIAQZL3ZV2GGZWD5TNDDTF3YPPPEE';
+const key = process.env.API_KEY;
 
 module.exports.getBars = (event, context, callback) => {
   const symbol = event.pathParameters.symbol;
   const apiUrl = `https://api.tdameritrade.com/v1/marketdata/${symbol}/pricehistory?apikey=${key}&periodType=year&period=1&frequencyType=weekly&frequency=1`;
 
   context.callbackWaitsForEmptyEventLoop = false;
-
   request.get(apiUrl, (error, response, body) => {
     if (error) {
       console.log(error);
@@ -20,7 +19,7 @@ module.exports.getBars = (event, context, callback) => {
         body
       })
     } else {
-      callback(`Error processing request to TD Ameritrade API, returned status code: ${response.statusCode}`)
+      callback(`Error processing request to TD Ameritrade API, returned status code: ${response.statusCode} for URI: ${apiUrl}`)
     }
   })
 };
