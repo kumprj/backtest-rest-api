@@ -5,18 +5,17 @@ import {GRAPH_TYPES} from '../constants';
 const convertDataToSeries = (data) => {
   const series = [];
 
-  if (data) {
-    data.forEach(candle => {
-      series.push({
-        x: new Date(candle.datetime),
-        y: [candle.open, candle.high, candle.low, candle.close]
-      });
+  data.forEach(candle => {
+    series.push({
+      x: new Date(candle.datetime),
+      y: [candle.open, candle.high, candle.low, candle.close]
     });
-  }
+  });
 
   return [{name: 'Price (USD)', data: series}];
 };
 
+// TODO: find a way to combine this component with price-history-line-graph.jsx and render conditionally
 export default ({data, view}) => {
   const series = convertDataToSeries(data.candles, view);
   const options = {
@@ -49,14 +48,12 @@ export default ({data, view}) => {
 
   return (
     <div>
-      {(data.candles && data.candles.length > 0) &&
       <Chart
         options={options}
         type={GRAPH_TYPES.CANDLESTICK}
         height={350}
         series={series}
       />
-      }
     </div>
   );
 };

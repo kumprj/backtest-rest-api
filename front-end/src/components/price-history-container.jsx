@@ -1,18 +1,41 @@
 import React, {Component} from 'react';
-import {Grid, Switch, Select, Typography} from '@material-ui/core';
+import {Grid, Switch, Select, Typography, CircularProgress} from '@material-ui/core';
 import {getStockHistory} from '../services/api-service';
 import PriceHistoryCandleStickGraph from './price-history-candlestick-graph';
 import PriceHistoryLineGraph from './price-history-line-graph';
 import {GRAPH_TYPES} from '../constants';
 
-export default class PriceHistory extends Component {
+
+const determineViewToShow = (view, data) => {
+  if (data) {
+    if (data.empty) {
+      return (
+        <div align='center'>
+          TD Ameritrade does not have stock history for this symbol.
+        </div>
+      );
+    } else if (view === GRAPH_TYPES.AREA) {
+      return <PriceHistoryLineGraph data={data}/>;
+    } else {
+      return <PriceHistoryCandleStickGraph data={data}/>;
+    }
+  } else {
+    return (
+      <div align='center'>
+        <CircularProgress />
+      </div>
+    );
+  }
+};
+
+export default class PriceHistoryContainer extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       view: GRAPH_TYPES.CANDLESTICK,
       period: 'monthly',
-      graphData: []
+      graphData: null,
     };
 
     this.handlePeriodChange = this.handlePeriodChange.bind(this);
@@ -32,11 +55,11 @@ export default class PriceHistory extends Component {
     });
   }
 
-  refreshGraphData() {
-    getStockHistory(this.props.symbol).then(data => {
-      this.setState({
-        graphData: data
-      });
+  async refreshGraphData() {
+    const data = await getStockHistory(this.props.symbol);
+    data.candles = data.candles.sort((symbol1, symbol2) => symbol1.datetime < symbol2.datetime);
+    this.setState({
+      graphData: data
     });
   }
 
@@ -78,14 +101,7 @@ export default class PriceHistory extends Component {
           </Select>
         </Grid>
         <Grid item xs={12}>
-          {
-            this.state.view === GRAPH_TYPES.AREA
-              ?
-              <PriceHistoryLineGraph data={this.state.graphData}/>
-              :
-              <PriceHistoryCandleStickGraph data={this.state.graphData}/>
-          }
-
+          {determineViewToShow(this.state.view, this.state.graphData)}
         </Grid>
       </Grid>
     );

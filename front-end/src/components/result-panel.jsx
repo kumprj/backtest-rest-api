@@ -8,9 +8,9 @@ import {
   Tab,
 } from '@material-ui/core';
 import Table from './results-table';
-import PriceHistory from './price-history';
+import PriceHistoryContainer from './price-history-container';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import ResultGraph from './results-graph';
+import ResultGraphContainer from './results-graph-container';
 
 const TABLE = 'table';
 const GRAPH = 'graph';
@@ -32,9 +32,9 @@ export default ({data, isDefaultExpanded}) => {
   let displayComponent;
 
   if (toggleView === HISTORY) {
-    displayComponent = <PriceHistory symbol={data.symbol} />;
+    displayComponent = <PriceHistoryContainer symbol={data.symbol} />;
   } else if (toggleView === GRAPH) {
-    displayComponent = <ResultGraph data={data.rows}/>;
+    displayComponent = <ResultGraphContainer data={data.rows}/>;
   } else {
     displayComponent = <Table data={data.rows}/>;
   }

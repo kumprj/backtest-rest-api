@@ -5,11 +5,9 @@ import {GRAPH_TYPES} from '../constants';
 const convertDataToSeries = (data) => {
   const series = [];
 
-  if (data) {
-    data.forEach(candle => {
-      series.push([new Date(candle.datetime), candle.close]);
-    });
-  }
+  data.forEach(candle => {
+    series.push([new Date(candle.datetime), candle.close]);
+  });
 
   return [{name: 'Price (USD)', data: series}];
 };
@@ -19,9 +17,10 @@ const colors = {
   GREEN: '#2e7d32',
 };
 
+// TODO: find a way to combine this component with price-history-candlestick-graph.jsx and render conditionally.
 export default ({data}) => {
   const series = convertDataToSeries(data.candles);
-  const isPositiveGrowth = (data.candles && data.candles.length) && (data.candles[0].open < data.candles[data.candles.length - 1].open);
+  const isPositiveGrowth = data.candles[0].close < data.candles[data.candles.length - 1].close;
 
   const options = {
     chart: {
@@ -59,14 +58,12 @@ export default ({data}) => {
 
   return (
     <div>
-      {(data.candles && data.candles.length > 0) &&
       <Chart
         options={options}
         type={GRAPH_TYPES.AREA}
         height={350}
         series={series}
       />
-      }
     </div>
   );
 };
