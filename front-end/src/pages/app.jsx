@@ -11,7 +11,7 @@ export default class App extends Component {
     super(props);
 
     this.state = {
-      tableData: [],
+      tableData: null,
       searchDate: null,
       expandAll: false,
       symbolSearch: '',

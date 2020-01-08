@@ -5,14 +5,22 @@ import PriceHistoryCandleStickGraph from './price-history-candlestick-graph';
 import PriceHistoryLineGraph from './price-history-line-graph';
 import {GRAPH_TYPES} from '../constants';
 
-export default class PriceHistory extends Component {
+const getGraph = (view, data) => {
+  if (view === GRAPH_TYPES.AREA) {
+    return <PriceHistoryLineGraph data={data}/>;
+  } else {
+    return <PriceHistoryCandleStickGraph data={data}/>;
+  }
+};
+
+export default class PriceHistoryContainer extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       view: GRAPH_TYPES.CANDLESTICK,
       period: 'monthly',
-      graphData: []
+      graphData: null,
     };
 
     this.handlePeriodChange = this.handlePeriodChange.bind(this);
@@ -32,11 +40,10 @@ export default class PriceHistory extends Component {
     });
   }
 
-  refreshGraphData() {
-    getStockHistory(this.props.symbol).then(data => {
-      this.setState({
-        graphData: data
-      });
+  async refreshGraphData() {
+    const data = await getStockHistory(this.props.symbol);
+    this.setState({
+      graphData: data
     });
   }
 
@@ -79,13 +86,14 @@ export default class PriceHistory extends Component {
         </Grid>
         <Grid item xs={12}>
           {
-            this.state.view === GRAPH_TYPES.AREA
+            (this.state.graphData && this.state.graphData.length === 0)
               ?
-              <PriceHistoryLineGraph data={this.state.graphData}/>
+              <div>
+                TD Ameritrade does not recognize this stock symbol, no price history available.
+              </div>
               :
-              <PriceHistoryCandleStickGraph data={this.state.graphData}/>
+              getGraph(this.state.view, this.state.graphData)
           }
-
         </Grid>
       </Grid>
     );
