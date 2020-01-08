@@ -1,15 +1,28 @@
 import React, {Component} from 'react';
-import {Grid, Switch, Select, Typography} from '@material-ui/core';
+import {Grid, Switch, Select, Typography, CircularProgress} from '@material-ui/core';
 import {getStockHistory} from '../services/api-service';
 import PriceHistoryCandleStickGraph from './price-history-candlestick-graph';
 import PriceHistoryLineGraph from './price-history-line-graph';
 import {GRAPH_TYPES} from '../constants';
 
-const getGraph = (view, data) => {
-  if (view === GRAPH_TYPES.AREA) {
-    return <PriceHistoryLineGraph data={data}/>;
+
+const determineViewToShow = (view, data) => {
+  if (data) {
+    if (data.length === 0) {
+      return (
+        <div align='center'>
+          TD Ameritrade does not have stock history for this symbol.
+        </div>
+      );
+    } else if (view === GRAPH_TYPES.AREA) {
+      return <PriceHistoryLineGraph data={data}/>;
+    } else {
+      return <PriceHistoryCandleStickGraph data={data}/>;
+    }
   } else {
-    return <PriceHistoryCandleStickGraph data={data}/>;
+    return (
+      <div align='center'><CircularProgress /></div>
+    );
   }
 };
 
@@ -85,15 +98,7 @@ export default class PriceHistoryContainer extends Component {
           </Select>
         </Grid>
         <Grid item xs={12}>
-          {
-            (this.state.graphData && this.state.graphData.length === 0)
-              ?
-              <div>
-                TD Ameritrade does not recognize this stock symbol, no price history available.
-              </div>
-              :
-              getGraph(this.state.view, this.state.graphData)
-          }
+          {determineViewToShow(this.state.view, this.state.graphData)}
         </Grid>
       </Grid>
     );

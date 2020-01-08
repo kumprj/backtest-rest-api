@@ -1,7 +1,6 @@
 import React from 'react';
 import Chart from 'react-apexcharts';
 import {GRAPH_TYPES} from '../constants';
-import CircularProgress from '@material-ui/core/CircularProgress';
 
 const convertDataToSeries = (data) => {
   const series = [];
@@ -22,60 +21,51 @@ const colors = {
 
 // TODO: find a way to combine this component with price-history-candlestick-graph.jsx and render conditionally.
 export default ({data}) => {
+  const series = convertDataToSeries(data.candles);
+  const isPositiveGrowth = (data.candles && data.candles.length) && (data.candles[0].open < data.candles[data.candles.length - 1].open);
 
-  if (data && data.candles) {
-    const series = convertDataToSeries(data.candles);
-    const isPositiveGrowth = (data.candles && data.candles.length) && (data.candles[0].open < data.candles[data.candles.length - 1].open);
-
-    const options = {
-      chart: {
-        type: GRAPH_TYPES.AREA,
-        height: 350,
-        toolbar: {
-          show: false
-        },
-        zoom: {
-          enabled: false
-        }
-      },
-      title: {
-        text: data.symbol,
-        align: 'left'
-      },
-      xaxis: {
-        type: 'datetime'
-      },
-      dataLabels: {
-        enabled: false
-      },
+  const options = {
+    chart: {
+      type: GRAPH_TYPES.AREA,
+      height: 350,
       toolbar: {
         show: false
       },
-      stroke: {
-        curve: 'straight',
-        colors: isPositiveGrowth ? [colors.GREEN] : [colors.RED],
-      },
-      fill: {
-        colors: isPositiveGrowth ? [colors.GREEN] : [colors.RED],
-        opacity: 0.2
-      },
-    };
+      zoom: {
+        enabled: false
+      }
+    },
+    title: {
+      text: data.symbol,
+      align: 'left'
+    },
+    xaxis: {
+      type: 'datetime'
+    },
+    dataLabels: {
+      enabled: false
+    },
+    toolbar: {
+      show: false
+    },
+    stroke: {
+      curve: 'straight',
+      colors: isPositiveGrowth ? [colors.GREEN] : [colors.RED],
+    },
+    fill: {
+      colors: isPositiveGrowth ? [colors.GREEN] : [colors.RED],
+      opacity: 0.2
+    },
+  };
 
-    return (
-      <div>
-        <Chart
-          options={options}
-          type={GRAPH_TYPES.AREA}
-          height={350}
-          series={series}
-        />
-      </div>
-    );
-  } else {
-    return (
-      <div align='center'>
-        <CircularProgress />
-      </div>
-    );
-  }
+  return (
+    <div>
+      <Chart
+        options={options}
+        type={GRAPH_TYPES.AREA}
+        height={350}
+        series={series}
+      />
+    </div>
+  );
 };

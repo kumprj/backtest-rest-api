@@ -1,6 +1,7 @@
 /* API JSON Fields
 *
 * column spec according to https://github.com/gregnb/mui-datatables
+* update this if the API returns different or additional JSON fields.
 */
 export const API_HEADERS = [
   {
