@@ -5,14 +5,12 @@ import {GRAPH_TYPES} from '../constants';
 const convertDataToSeries = (data) => {
   const series = [];
 
-  if (data) {
-    data.forEach(candle => {
-      series.push({
-        x: new Date(candle.datetime),
-        y: [candle.open, candle.high, candle.low, candle.close]
-      });
+  data.forEach(candle => {
+    series.push({
+      x: new Date(candle.datetime),
+      y: [candle.open, candle.high, candle.low, candle.close]
     });
-  }
+  });
 
   return [{name: 'Price (USD)', data: series}];
 };
