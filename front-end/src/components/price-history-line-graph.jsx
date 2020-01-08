@@ -20,7 +20,7 @@ const colors = {
 // TODO: find a way to combine this component with price-history-candlestick-graph.jsx and render conditionally.
 export default ({data}) => {
   const series = convertDataToSeries(data.candles);
-  const isPositiveGrowth = (data.candles && data.candles.length) && (data.candles[0].open < data.candles[data.candles.length - 1].open);
+  const isPositiveGrowth = data.candles[0].close < data.candles[data.candles.length - 1].close;
 
   const options = {
     chart: {

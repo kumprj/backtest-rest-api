@@ -8,7 +8,7 @@ import {GRAPH_TYPES} from '../constants';
 
 const determineViewToShow = (view, data) => {
   if (data) {
-    if (data.length === 0) {
+    if (data.empty) {
       return (
         <div align='center'>
           TD Ameritrade does not have stock history for this symbol.
@@ -21,7 +21,9 @@ const determineViewToShow = (view, data) => {
     }
   } else {
     return (
-      <div align='center'><CircularProgress /></div>
+      <div align='center'>
+        <CircularProgress />
+      </div>
     );
   }
 };
@@ -55,6 +57,7 @@ export default class PriceHistoryContainer extends Component {
 
   async refreshGraphData() {
     const data = await getStockHistory(this.props.symbol);
+    data.candles = data.candles.sort((symbol1, symbol2) => symbol1.datetime < symbol2.datetime);
     this.setState({
       graphData: data
     });
