@@ -91,9 +91,6 @@ module.exports.getMLResults = async (event, context, callback) => {
 
   context.callbackWaitsForEmptyEventLoop = false;  
   try {
-    var input = event.pathParameters.todays_date
-    var date = input.replaceAll("_", "/")
-    console.log(date)
     const sql = "select * from currentmodelsignals"
     const result = await db.query(sql, date)
 	  .then(res => {
