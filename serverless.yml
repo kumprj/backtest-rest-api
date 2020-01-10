@@ -22,12 +22,23 @@ org: kumprj
 plugins:
   - serverless-offline
 
+custom:
+  DB_CREDENTIALS: ${ssm:/aws/reference/secretsmanager/stocksDatabaseLogin~true}
+  API_KEY: ${ssm:/aws/reference/secretsmanager/tdAmeritradeApiKey~true}
+
 provider:
   name: aws
   runtime: nodejs10.x
   memorySize: 128
   timeout: 30
   region: us-east-2
+  environment:
+    DB_PASSWORD: ${self:custom.DB_CREDENTIALS.password}
+    DB_USERNAME: ${self:custom.DB_CREDENTIALS.username}
+    DB_HOST: ${self:custom.DB_CREDENTIALS.host}
+    DB_PORT: ${self:custom.DB_CREDENTIALS.port}
+    DB_NAME: ${self:custom.DB_CREDENTIALS.dbname}
+    API_KEY: ${self:custom.API_KEY.TD_API_KEY}
 # you can overwrite defaults here
 #  stage: dev
 #  region: us-east-1
@@ -62,13 +73,6 @@ provider:
 #    - exclude-me-dir/**
 
 functions:
-  getAllTodos:
-    handler: handler.getAllTodos
-    events:
-      - http:
-          path: backtest_results_stg
-          method: get
-          cors: false
   getResults:
     handler: handler.getResults
     events:
@@ -89,7 +93,16 @@ functions:
       - http:
           path: ML
           method: get
-          cors: false   
+          cors: false      
+  getBars:
+    handler: handler.getBars
+    events:
+      - http:
+          path: getBars/{symbol}
+          method: get
+          cors: false  
+          
+
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events

@@ -1,6 +1,7 @@
 /* API JSON Fields
 *
 * column spec according to https://github.com/gregnb/mui-datatables
+* update this if the API returns different or additional JSON fields.
 */
 export const API_HEADERS = [
   {
@@ -50,4 +51,4 @@ export const API_HEADERS = [
 
 /* API URL */
 export const DB_URL = 'https://4w629k6x07.execute-api.us-east-2.amazonaws.com/dev/backtest_results_10ma';
-
+export const STOCK_HISTORY_URL = 'https://4w629k6x07.execute-api.us-east-2.amazonaws.com/dev/getBars';
