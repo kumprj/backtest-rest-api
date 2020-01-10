@@ -92,7 +92,7 @@ module.exports.getMLResults = async (event, context, callback) => {
   context.callbackWaitsForEmptyEventLoop = false;  
   try {
     const sql = "select * from currentmodelsignals"
-    const result = await db.query(sql, date)
+    const result = await db.query(sql)
 	  .then(res => {
 		callback(null, {
       headers: {
