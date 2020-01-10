@@ -83,7 +83,13 @@ functions:
           path: backtest_results_10ma/{todays_date}
           method: get
           cors: false          
-
+  getMLResults:
+    handler: handler.getMLResults
+    events:
+      - http:
+          path: ML
+          method: get
+          cors: false   
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events

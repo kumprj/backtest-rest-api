@@ -79,6 +79,32 @@ module.exports.getMaResults = async (event, context, callback) => {
    
 };
 
+// Get ML Model results
+module.exports.getMLResults = async (event, context, callback) => {  
+
+  context.callbackWaitsForEmptyEventLoop = false;  
+  try {
+    var input = event.pathParameters.todays_date
+    var date = input.replaceAll("_", "/")
+    console.log(date)
+    const sql = "select * from currentmodelsignals"
+    const result = await db.query(sql, date)
+	  .then(res => {
+		callback(null, {
+      headers: {
+        "Access-Control-Allow-Origin" : "*" // Required for CORS support to work
+      },
+			statusCode: 200,
+			body: JSON.stringify(res)
+		})
+	  });
+    //console.log(result)
+   } catch (e) {
+	console.log(e)
+   }
+   
+};
+
 module.exports.hello = async event => {
   return {
     statusCode: 200,
